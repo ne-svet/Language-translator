@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "724443265865",
+    "project_id": "language-translator-17485",
+    "storage_bucket": "language-translator-17485.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724443265865:android:5b84d2c051225567c07898",
+        "android_client_info": {
+          "package_name": "com.mainor.language_translator_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBWnF7ddmeIM47PoeWIs8bzlE8T05cqq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
