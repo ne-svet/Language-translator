@@ -21,9 +21,9 @@ class TranslationLogic {
     required this.historyProvider,
     required this.updateStateCallback,
     //изначальные значения языков
-    LanguageLabel selectedLangFrom = LanguageLabel.english,
-    LanguageLabel selectedLangTo = LanguageLabel.russian,
-  }) : this.selectedLangFrom = selectedLangFrom,
+    LanguageLabel selectedLangFrom = LanguageLabel.russian,
+    LanguageLabel selectedLangTo = LanguageLabel.english,
+  })  : this.selectedLangFrom = selectedLangFrom,
         this.selectedLangTo = selectedLangTo;
 
   // Метод для установки колбэка обновления состояния
@@ -34,23 +34,21 @@ class TranslationLogic {
 // функция перевода
   void translate(String input) async {
     // Если выбранные языки одинаковые, ничего не делаем
-    if(selectedLangFrom == selectedLangTo) {
+    if (selectedLangFrom == selectedLangTo) {
       return;
     }
-    if(input == '') {
+    if (input == '') {
       output = '';
       updateStateCallback();
       return;
     }
 
     GoogleTranslator translator = GoogleTranslator();
-    var translationRes = await translator.translate(
-        input,
-        from: selectedLangFrom.code,
-        to:selectedLangTo.code);
+    var translationRes = await translator.translate(input,
+        from: selectedLangFrom.code, to: selectedLangTo.code);
     output = translationRes.text;
     updateStateCallback(); // Вызов колбэка для обновления интерфейса
-    }
+  }
 
   //направление перевода
   void changeLanguage() {
@@ -86,6 +84,4 @@ class TranslationLogic {
       print("Error deleting translation history: $error");
     });
   }
-
-  }
-
+}

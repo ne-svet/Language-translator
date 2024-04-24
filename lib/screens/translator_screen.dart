@@ -58,15 +58,30 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
         bottomNavigationBar: const MyBottomNavigationBar(),
         //кнопка добавления в историю
         floatingActionButton: FloatingActionButton(
+          //нажатие на кнопку
           onPressed: () {
-      
             // Вызываем метод сохранения данных из translationLogic
             translationLogic.saveData(languageController.text);
+
+            //показываем уведомление о сохранении
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Translation has been saved!',textAlign: TextAlign.center,),
+                duration: const Duration(milliseconds: 1500),
+                //width: 380.0, // Width of the SnackBar.
+                margin: const EdgeInsets.all(25.0),
+                padding: const EdgeInsets.all(10.0),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            );
           },
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
-      
+
         //экран
         body: SafeArea(
             child: Padding(

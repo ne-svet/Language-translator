@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
-void main() async{
+void main() async {
   //аутентификация
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -18,17 +18,15 @@ void main() async{
         ChangeNotifierProvider(
           //создаем и предоставляем объект CalculationHistoryModel, который будет использоваться во всем приложении.
           create: (context) => TranslationHistoryProvider(),
-
         ),
       ],
-        child: MyApp(),
+      child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +37,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
         useMaterial3: true,
       ),
-      initialRoute: '/', // Устанавливаем начальный маршрут
+      initialRoute: '/',
+      // Устанавливаем начальный маршрут
       //экраны
       routes: {
-        '/' : (context) => TranslatorScreen(),
-        '/history' : (context) => HistoryScreen(),
+        '/': (context) => TranslatorScreen(),
+        '/history': (context) => HistoryScreen(),
       },
     );
   }
 }
-
-
-

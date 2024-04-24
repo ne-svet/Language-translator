@@ -1,11 +1,8 @@
-
-
 //абстрактный класс, он же интерфейс.
 // Которые будем использовать в контроллере
 import 'package:language_translator_app/model/translation_history.dart';
 
 abstract class PersistenceController {
-
   //соединение с БД
   Future<void> init();
 
@@ -20,5 +17,4 @@ abstract class PersistenceController {
 
   //очистить историю
   Future<void> clearHistory();
-
 }

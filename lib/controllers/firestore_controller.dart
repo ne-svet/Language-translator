@@ -8,17 +8,6 @@ import '../firebase_options.dart';
 class FirestoreController implements PersistenceController {
   late FirebaseFirestore db;
 
-  //удаляем объект по его ID
-  @override
-  Future<void> deleteData(TranslationHistory translationHistory) async {
-    await init();
-    // Получаем идентификатор документа, который нужно удалить
-    String documentId = translationHistory.id;
-
-    // Удаляем документ из коллекции 'translationHistory' по его идентификатору
-    await db.collection('translationHistory').doc(documentId).delete();
-  }
-
   //получаем список всех TranslationHistory из Firebase
   @override
   Future<List<TranslationHistory>> getAllData() async {
@@ -68,11 +57,10 @@ class FirestoreController implements PersistenceController {
   }
 
   @override
-  Future<void> clearHistory() async{
+  Future<void> clearHistory() async {
     await init();
     //получаем базу для удаления
-    QuerySnapshot snapshot = await db.collection('translationHistory')
-        .get();
+    QuerySnapshot snapshot = await db.collection('translationHistory').get();
     // Проверяем, есть ли документы для удаления
     if (snapshot.docs.isNotEmpty) {
       // Используем цикл для удаления каждого документа
@@ -81,6 +69,42 @@ class FirestoreController implements PersistenceController {
       }
     } else {
       print('Nothing to delete');
+    }
+  }
+
+  //удаляем объект по его ID
+  @override
+  Future<void> deleteData(TranslationHistory translationHistory) async {
+    await init();
+    // Получаем идентификатор документа, который нужно удалить
+    String documentId = translationHistory.id;
+
+    // Удаляем документ из коллекции 'translationHistory' по его идентификатору
+    await db.collection('translationHistory').doc(documentId).delete();
+
+    // Проверяем, если коллекция 'translationHistory' содержит пустые документы, удаляем их
+    await deleteEmptyDocuments();
+  }
+
+  //удаляем пустые документы коллекции
+  Future<void> deleteEmptyDocuments() async {
+    // Получаем все документы в коллекции
+    QuerySnapshot snapshot = await db.collection('translationHistory').get();
+
+    // Итерируем по документам и удаляем пустые документы
+    for (DocumentSnapshot doc in snapshot.docs) {
+      // Проверяем, есть ли данные в документе
+      Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+
+      // Проверяем, что данные не равны null и не пусты
+      if (data != null && data.isNotEmpty) {
+        // Документ не пустой, пропускаем
+        continue;
+      }
+
+      // Если мы здесь, значит документ пустой или data == null
+      // Удаляем пустой документ
+      await doc.reference.delete();
     }
   }
 }
