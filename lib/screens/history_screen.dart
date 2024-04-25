@@ -104,9 +104,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             child: Column(
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                    '${DateFormat('yyyy-MM-dd HH:mm').format(translationHistory.date)} '),
+                                    '${DateFormat('yyyy-MM-dd HH:mm').format(translationHistory.date.toDate())} '),
                                 FloatingActionButton(
                                   mini: true,
                                   child: Text('X', style: TextStyle(fontWeight: FontWeight.bold),),
@@ -133,9 +134,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   },
                                 ),
                               ],
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             ),
-                            Text(
+                             Text(
                               '${translationHistory.input} ',
                               style: const TextStyle(
                                 fontSize: 18,
@@ -168,8 +168,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   );
                 } else {
                   return const Center(
-                    heightFactor: 30,
-                    child: Text('Loading...'),
+                    heightFactor: 18,
+                    child: CircularProgressIndicator(),
                   );
                 }
               }),

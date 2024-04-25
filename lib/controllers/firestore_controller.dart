@@ -4,17 +4,22 @@ import 'package:language_translator_app/controllers/persistance_controller.dart'
 import 'package:language_translator_app/model/translation_history.dart';
 
 import '../firebase_options.dart';
+import 'authentication.dart';
 
 class FirestoreController implements PersistenceController {
   late FirebaseFirestore db;
+
 
   //получаем список всех TranslationHistory из Firebase
   @override
   Future<List<TranslationHistory>> getAllData() async {
     await init();
+    String userId = await Authentication.getUserId();
     //получаем документы из коллекции translationHistory в Map формате
     QuerySnapshot snapshot = await db
         .collection('translationHistory')
+    // выбираем по UserID
+        .where('userId', isEqualTo: userId)
         //сортируем по дате
         .orderBy('date', descending: true)
         .get();
@@ -43,13 +48,19 @@ class FirestoreController implements PersistenceController {
   Future<void> saveData(TranslationHistory translationHistory) async {
     await init();
     try {
-      // добавляем в историю docRef
-      DocumentReference docRef = await db
-          .collection('translationHistory')
-          .add(translationHistory.toMap());
+      String userId = await Authentication.getUserId();
 
-      // автоматически сгенерированный id
-      translationHistory.id = docRef.id;
+      // Преобразуем translationHistory в Map
+      Map<String, dynamic> data = translationHistory.toMap();
+
+      // Добавляем userId к данным, которые будут сохранены
+      data['userId'] = userId;
+
+      // Добавляем запись в коллекцию 'translationHistory'
+      DocumentReference docRef = await db.collection('translationHistory').add(data);
+
+      // Не нужно присваивать translationHistory.id, так как он автоматически присваивается Firestore
+
     } catch (e) {
       print('Error saving translation history: $e');
       throw e;

@@ -1,18 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TranslationHistory {
   // Поле для хранения идентификатора документа Firestore
-  late String id;
+  final String id;
   final String input;
   final String output;
-  final DateTime date;
+  final Timestamp date;
+  final String userId;
 
   TranslationHistory(
-      {required this.input, required this.output, required this.date});
+      {this.id = '',
+        required this.userId,
+        required this.input,
+        required this.output,
+        required this.date});
 
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
+      "userId" : userId,
       "input": input,
       "output": output,
-      "date": date.toString(),
+      "date": date,
     };
   }
 
@@ -21,10 +29,12 @@ class TranslationHistory {
   factory TranslationHistory.fromMap(
       Map<String, dynamic> map, String documentId) {
     TranslationHistory th = TranslationHistory(
+        id: documentId,
+      userId: map['userId'],
       input: map['input'],
       output: map['output'],
-      date: DateTime.parse(map['date']),
-    )..id = documentId; // Устанавливаем идентификатор из Firestore;
+      date: map['date']
+    );
     return th;
   }
 }

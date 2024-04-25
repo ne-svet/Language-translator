@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:language_translator_app/controllers/authentication.dart';
+import 'package:language_translator_app/controllers/firestore_controller.dart';
 import 'package:language_translator_app/model/translation_history.dart';
 import 'package:translator/translator.dart';
 
@@ -63,18 +66,35 @@ class TranslationLogic {
     translate(txt);
   }
 
-  void saveData(String inputText) {
+  void saveData(String inputText) async{
     // Если ввод или перевод пустые, не сохраняем
     if (inputText.isEmpty || output.isEmpty) {
       return;
     }
-    // Добавляем расчет в историю, создав объект TranslationHistory
-    historyProvider.addTranslationHistory(TranslationHistory(
-      input: inputText,
-      output: output,
-      date: DateTime.now(),
-    ));
-    updateStateCallback();
+    try {
+      // Получаем userId асинхронно
+      String userId = await Authentication.getUserId();
+
+      // Создаем новый объект TranslationHistory
+      TranslationHistory newHistory = TranslationHistory(
+        userId: userId,
+        input: inputText,
+        output: output,
+        date: Timestamp.now(),
+      );
+
+      // Добавляем расчет в историю, создав объект TranslationHistory
+      historyProvider.addTranslationHistory(TranslationHistory(
+        userId: userId,
+        input: inputText,
+        output: output,
+        date: Timestamp.now(),
+      ));
+      updateStateCallback();
+    } catch (error) {
+      print("Error saving translation history: $error");
+      // Можно добавить обработку ошибки здесь
+    }
   }
 
   void deleteData(TranslationHistory th) {
