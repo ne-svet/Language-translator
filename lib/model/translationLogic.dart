@@ -66,7 +66,7 @@ class TranslationLogic {
     translate(txt);
   }
 
-  void saveData(String inputText) async{
+  void saveData(String inputText) async {
     // Если ввод или перевод пустые, не сохраняем
     if (inputText.isEmpty || output.isEmpty) {
       return;

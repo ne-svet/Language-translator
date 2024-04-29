@@ -9,12 +9,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text("My Translator",
-      style: TextStyle(
-        fontWeight: FontWeight.bold
-      ),),
+      title: const Text(
+        "My Translator",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       centerTitle: true,
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      automaticallyImplyLeading: false,
     );
   }
 }

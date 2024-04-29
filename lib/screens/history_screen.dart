@@ -34,7 +34,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const MyBottomNavigationBar(),
+      bottomNavigationBar: MyBottomNavigationBar(),
       appBar: MyAppBar(),
       //кнопка удаление истории
       floatingActionButton: FloatingActionButton(
@@ -43,7 +43,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
             context: context,
             builder: (BuildContext context) => AlertDialog(
               title: const Text('Clear history'),
-              content: const Text('Are you sure you want to clear translation history?'),
+              content: const Text(
+                  'Are you sure you want to clear translation history?'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context),
@@ -51,14 +52,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Provider.of<TranslationHistoryProvider>(
-                        context, listen: false).clearHistory();
+                    Provider.of<TranslationHistoryProvider>(context,
+                            listen: false)
+                        .clearHistory();
                     // Закрываем текущий экран и возвращаемся на предыдущий экран
                     Navigator.pop(context);
                     //показываем уведомление об удалении истории
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: const Text('Translation history has been cleared!',textAlign: TextAlign.center,),
+                        content: const Text(
+                          'Translation history has been cleared!',
+                          textAlign: TextAlign.center,
+                        ),
                         duration: const Duration(milliseconds: 1500),
                         margin: const EdgeInsets.all(25.0),
                         padding: const EdgeInsets.all(10.0),
@@ -75,12 +80,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
           );
         },
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     // Очистить историю при нажатии на кнопку
-      //     Provider.of<TranslationHistoryProvider>(context, listen: false)
-      //         .clearHistory();
-      //   },
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     // Очистить историю при нажатии на кнопку
+        //     Provider.of<TranslationHistoryProvider>(context, listen: false)
+        //         .clearHistory();
+        //   },
         child: const Icon(Icons.delete),
         backgroundColor: Theme.of(context).colorScheme.errorContainer,
       ),
@@ -110,23 +115,33 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     '${DateFormat('yyyy-MM-dd HH:mm').format(translationHistory.date.toDate())} '),
                                 FloatingActionButton(
                                   mini: true,
-                                  child: Text('X', style: TextStyle(fontWeight: FontWeight.bold),),
+                                  child: Text(
+                                    'X',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
                                   backgroundColor: Theme.of(context)
                                       .colorScheme
                                       .errorContainer,
                                   onPressed: () {
-                                    translationLogic.deleteData(translationHistory);
+                                    translationLogic
+                                        .deleteData(translationHistory);
                                     //показываем уведомление об удалении записи
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: const Text('Record has been deleted!',textAlign: TextAlign.center,),
-                                        duration: const Duration(milliseconds: 1500),
+                                        content: const Text(
+                                          'Record has been deleted!',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        duration:
+                                            const Duration(milliseconds: 1500),
                                         //width: 380.0, // Width of the SnackBar.
                                         margin: const EdgeInsets.all(25.0),
                                         padding: const EdgeInsets.all(10.0),
                                         behavior: SnackBarBehavior.floating,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
                                       ),
                                     );
@@ -135,7 +150,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 ),
                               ],
                             ),
-                             Text(
+                            Text(
                               '${translationHistory.input} ',
                               style: const TextStyle(
                                 fontSize: 18,

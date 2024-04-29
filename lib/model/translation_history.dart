@@ -10,14 +10,14 @@ class TranslationHistory {
 
   TranslationHistory(
       {this.id = '',
-        required this.userId,
-        required this.input,
-        required this.output,
-        required this.date});
+      required this.userId,
+      required this.input,
+      required this.output,
+      required this.date});
 
   Map<String, dynamic> toMap() {
     return {
-      "userId" : userId,
+      "userId": userId,
       "input": input,
       "output": output,
       "date": date,
@@ -30,11 +30,10 @@ class TranslationHistory {
       Map<String, dynamic> map, String documentId) {
     TranslationHistory th = TranslationHistory(
         id: documentId,
-      userId: map['userId'],
-      input: map['input'],
-      output: map['output'],
-      date: map['date']
-    );
+        userId: map['userId'],
+        input: map['input'],
+        output: map['output'],
+        date: map['date']);
     return th;
   }
 }

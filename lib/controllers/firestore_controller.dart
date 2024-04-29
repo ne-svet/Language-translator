@@ -9,7 +9,6 @@ import 'authentication.dart';
 class FirestoreController implements PersistenceController {
   late FirebaseFirestore db;
 
-
   //получаем список всех TranslationHistory из Firebase
   @override
   Future<List<TranslationHistory>> getAllData() async {
@@ -18,7 +17,7 @@ class FirestoreController implements PersistenceController {
     //получаем документы из коллекции translationHistory в Map формате
     QuerySnapshot snapshot = await db
         .collection('translationHistory')
-    // выбираем по UserID
+        // выбираем по UserID
         .where('userId', isEqualTo: userId)
         //сортируем по дате
         .orderBy('date', descending: true)
@@ -57,10 +56,10 @@ class FirestoreController implements PersistenceController {
       data['userId'] = userId;
 
       // Добавляем запись в коллекцию 'translationHistory'
-      DocumentReference docRef = await db.collection('translationHistory').add(data);
+      DocumentReference docRef =
+          await db.collection('translationHistory').add(data);
 
       // Не нужно присваивать translationHistory.id, так как он автоматически присваивается Firestore
-
     } catch (e) {
       print('Error saving translation history: $e');
       throw e;
